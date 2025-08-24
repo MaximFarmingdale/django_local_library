@@ -105,7 +105,20 @@ class Author(models.Model):
         return f'{self.first_name}, {self.last_name}'
     class Meta:
         ordering = ["last_name", "first_name"]
-
+class Language(models.Model): 
+    name = models.CharField(max_length=50, unique=True, help_text="Please enter a Language")
+    def get_absolute_url(self):
+        return reverse("language_detail", args=[str(self.id)])
+    def __str__(self):
+        self.name
+    class Meta: 
+        constraints = [
+            UniqueConstraint(
+                Lower('name'),
+                name = 'language_name_case_insensitive_unique',
+                violation_error_message="Language is invalid (case insensitive match)"
+            )
+        ]
 
     
 
