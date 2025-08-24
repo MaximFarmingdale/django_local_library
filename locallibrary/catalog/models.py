@@ -51,6 +51,11 @@ class Book(models.Model):
         Genre, 
         help_text="Enter a genre for this book",
     )
+    language = models.ForeignKey(
+        "Language",
+        on_delete=models.SET_NULL, 
+        null= True,
+    )
     def __str__(self):
         return self.title
     def get_absolute_url(self):
@@ -110,7 +115,7 @@ class Language(models.Model):
     def get_absolute_url(self):
         return reverse("language_detail", args=[str(self.id)])
     def __str__(self):
-        self.name
+        return self.name
     class Meta: 
         constraints = [
             UniqueConstraint(
