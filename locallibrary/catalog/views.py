@@ -21,4 +21,3 @@ def index(request):
     return render(request, 'index.html', context=context)
 class BookListView(generic.ListView):
     model = Book
-    context_object_name = 'book_list'
