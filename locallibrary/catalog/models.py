@@ -60,6 +60,11 @@ class Book(models.Model):
         return self.title
     def get_absolute_url(self):
         return reverse("book_detail", args=[str(self.id)])
+    def display_genre(self):
+        """Creates at String for the Genre for the admin website since Genre has a many to many relationship with Book
+        and cant be displayed without this function"""
+        return ', '.join(genre.name for genre in self.genre.all()[:3])
+    display_genre.short_description = 'Genre'
 
 class BookInstance(models.Model):
     
