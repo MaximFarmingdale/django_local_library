@@ -51,10 +51,20 @@ class Book(models.Model):
         Genre, 
         help_text="Enter a genre for this book",
     )
+    language = models.ForeignKey(
+        "Language",
+        on_delete=models.SET_NULL, 
+        null= True,
+    )
     def __str__(self):
         return self.title
     def get_absolute_url(self):
         return reverse("book_detail", args=[str(self.id)])
+    def display_genre(self):
+        """Creates at String for the Genre for the admin website since Genre has a many to many relationship with Book
+        and cant be displayed without this function"""
+        return ', '.join(genre.name for genre in self.genre.all()[:3])
+    display_genre.short_description = 'Genre'
 
 class BookInstance(models.Model):
     
@@ -110,7 +120,7 @@ class Language(models.Model):
     def get_absolute_url(self):
         return reverse("language_detail", args=[str(self.id)])
     def __str__(self):
-        self.name
+        return self.name
     class Meta: 
         constraints = [
             UniqueConstraint(
