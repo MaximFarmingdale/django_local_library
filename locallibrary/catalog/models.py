@@ -110,7 +110,7 @@ class Author(models.Model):
         blank=True,
     )
     def get_absolute_url(self):
-        return reverse("Author_detail", args=[str(self.id)])
+        return reverse("author_detail", args=[str(self.id)])
     def __str__(self):
         return f'{self.first_name}, {self.last_name}'
     class Meta:
