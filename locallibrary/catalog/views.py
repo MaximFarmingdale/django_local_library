@@ -24,3 +24,5 @@ class BookListView(generic.ListView):
     paginate_by = 10 #test it with 1 if you need to
 class BookDetailView(generic.DetailView):
     model = Book
+class AuthorListView(generic.ListView):
+    model = Author
