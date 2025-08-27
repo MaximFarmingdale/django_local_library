@@ -6,4 +6,5 @@ urlpatterns = [
     path('books/', views.BookListView.as_view(), name= 'books'),
     re_path(r'^book/(?P<pk>\d+)$', views.BookDetailView.as_view(), name='book_detail'),
     path('authors/', views.AuthorListView.as_view(), name='authors'),
+    re_path(r'^author/(?P<pk>\d+)$', views.AuthorDetailView.as_view(), name='author_detail')
 ]
