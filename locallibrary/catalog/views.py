@@ -21,5 +21,6 @@ def index(request):
     return render(request, 'index.html', context=context)
 class BookListView(generic.ListView):
     model = Book
+    paginate_by = 10 #test it with 1 if you need to
 class BookDetailView(generic.DetailView):
     model = Book
