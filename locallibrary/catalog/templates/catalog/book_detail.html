@@ -22,6 +22,8 @@
             {% endif %}
             <p><strong>Imprint:</strong> {{ copy.imprint }}</p>
             <p class='text-muted'><strong>Id:</strong> {{ copy.id }}</p>
-        {% endfor %}
+            {% empty %}
+                <p>No copies on record</p>
+            {% endfor %}
     </div>
 {% endblock %}
