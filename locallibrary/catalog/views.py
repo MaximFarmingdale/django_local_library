@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from .models import Book, Author, BookInstance, Genre
 from django.views import generic
-
 def index(request): 
     """View function for the home page"""
     num_books = Book.objects.all().count()
@@ -11,12 +10,15 @@ def index(request):
 
     #apparently you can leave out the all method since it is implied 
     num_authors = Author.objects.all().count()
-    
+    num_vists = request.session.get('num_vists', 0)
+    num_vists += 1
+    request.session['num_vists'] = num_vists
     context = {
         'numbooks': num_books,
         'num_instances': num_instances,
         'num_instances_available': num_instances_available,
         'num_authors': num_authors,
+        'num_vists': num_vists,
     }
     return render(request, 'index.html', context=context)
 class BookListView(generic.ListView):
