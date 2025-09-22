@@ -2,6 +2,9 @@ from django.db import models
 from django.urls import reverse
 from django.db.models import UniqueConstraint
 from django.db.models.functions import Lower
+from django.conf import settings
+from django.contrib.auth.models import User
+from datetime import date
 
 import uuid
 
@@ -32,6 +35,7 @@ class Book(models.Model):
 
     """Model for a book but not a specfic instance of said book"""
     title = models.CharField( max_length=200, help_text="Enter the title of the book")
+
     author = models.ForeignKey(
         'Author', 
         on_delete=models.RESTRICT, 
@@ -69,6 +73,11 @@ class Book(models.Model):
 class BookInstance(models.Model):
     
     """Model for a specfic instance of a book"""
+    borrower = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    @property
+    def is_overdue(self):
+        """Determines if the book is overdue based on if its past due date and current date."""
+        return bool(self.due_back and date.today() > self.due_back)
     id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
