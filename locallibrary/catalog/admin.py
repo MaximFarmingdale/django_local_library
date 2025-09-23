@@ -32,7 +32,7 @@ class BookInstanceAdmin(admin.ModelAdmin):
             ),
         }),
         ('Availability', {
-            'fields': ('status', 'due_back')
+            'fields': ('status', 'due_back','borrower')
         }),
     )
 admin.site.register(Genre)
