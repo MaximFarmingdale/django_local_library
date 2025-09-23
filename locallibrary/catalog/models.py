@@ -108,6 +108,7 @@ class BookInstance(models.Model):
     def __str__(self):
         return f'{self.id} ({self.book.title})'
     class Meta:
+        permissions = (("can_mark_returned", "Set book as returned"),)
         ordering = ['due_back']
 class Author(models.Model):
     first_name = models.CharField(max_length=100)
