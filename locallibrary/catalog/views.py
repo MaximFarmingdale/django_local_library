@@ -1,5 +1,5 @@
 import datetime
-from .models import Book, Author, BookInstance, Genre
+from .models import Book, Author, BookInstance, Genre, Language
 from django.views import generic
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404
@@ -83,7 +83,7 @@ class AuthorCreate(PermissionRequiredMixin, CreateView):
     model = Author
     fields = ['first_name', 'last_name', 'date_of_birth', 'date_of_death']
     initial = {'date_of_death': '11/11/2023'}
-    permission_required = 'catalog.change_author'
+    permission_required = 'perms.catalog.change_author'
 class AuthorUpdate(PermissionRequiredMixin, UpdateView):
     model = Author
     fields = '__all__'
@@ -98,8 +98,22 @@ class AuthorDelete(PermissionRequiredMixin, DeleteView):
             return HttpResponseRedirect(self.success_url)
         except Exception as e:
             return HttpResponseRedirect("author-delete", kwargs={'pk': self.object.pk})
-
-
-    
-
+class BookCreate(PermissionRequiredMixin, CreateView):
+    model = Book
+    fields = ["title", "author", "summary", "isbn", "genre", "language"]
+    permission_required = 'perms.catalog.create_book'
+class BookUpdate(PermissionRequiredMixin, UpdateView):
+    model = Book 
+    fields = ["title", "author", "summary", "isbn", "genre", "language"]
+    permission_required = 'perms.catalog.update_book'    
+class BookDelete(PermissionRequiredMixin, DeleteView):
+    model = Book
+    success_url = reverse_lazy('books')
+    permission_required = 'perms.catalog.delete_book'
+    def form_valid(self, form):
+        try: 
+            self.object.delete()
+            return HttpResponseRedirect(self.success_url)
+        except Exception as e:
+            return HttpResponseRedirect('book-delete', kwargs={'pk': self.object.pk})
 
