@@ -26,7 +26,16 @@
                             <li>User: {{ user.get_username }}</li>
 
                             <li> <a href="{% url 'my-borrowed' %}">My Borrowed</a></li>
-                            {%if perms.catalog.can_mark_returned %}<li> <a href = "{% url 'all-borrowed'%}">All Borrowed</a></li>{% endif %}
+                            {% if user.is_staff %}
+                                <hr>
+                                <ul class="sidebar-nav">
+                                <li>Staff</li>
+                                 <li><a href="{% url 'all-borrowed' %}">All borrowed</a></li>
+                                {% if perms.catalog.add_author %}
+                                    <li><a href="{% url 'author-create' %}">Create author</a></li>
+                                {% endif %}
+                                    </ul>
+                            {% endif %}
                             <li>
                                 <form id='logout-form' method='post' action="{% url 'logout' %}">
                                     {% csrf_token %}
