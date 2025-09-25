@@ -10,7 +10,6 @@ from catalog.forms import RenewBookForm
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from models import Author
 
 
 class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
@@ -80,7 +79,7 @@ def renew_book_librarian(request, pk):
         'book_instance': book_instance,
     }
     return render(request, 'perms.catalog/book_renew_librarian.html', context)
-class AuthorCreate(PermissionRequiredMixin, UpdateView):
+class AuthorCreate(PermissionRequiredMixin, CreateView):
     model = Author
     fields = ['first_name', 'last_name', 'date_of_birth', 'date_of_death']
     initial = {'date_of_death': '11/11/2023'}
