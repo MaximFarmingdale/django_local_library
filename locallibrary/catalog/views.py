@@ -57,7 +57,7 @@ class AuthorListView(generic.ListView):
 class AuthorDetailView(generic.DetailView):
     model = Author
 
-@PermissionRequiredMixin('catalog.can_mark_returned', raise_exception=True)
+@permission_required('perms.catalog.can_mark_returned', raise_exception=True)
 @login_required
 def renew_book_librarian(request, pk):
     book_instance = get_object_or_404(BookInstance, pk=pk)
@@ -75,4 +75,6 @@ def renew_book_librarian(request, pk):
         'book_instance': book_instance,
     }
     return render(request, 'catalog/book_renew_librarian.html', context)
+
+
 
